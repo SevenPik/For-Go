@@ -6,6 +6,12 @@ import (
 	"time"
 )
 
+func DoubleRoundFive(val float32) float32 {
+	valInt := int64(val * 100)
+	val = float32(valInt) / 100
+	return val
+}
+
 func Menu(produkt string) (float32, string) {
 	var wybórProduktu string
 	var cenaProduktów float32
@@ -20,27 +26,36 @@ func Menu(produkt string) (float32, string) {
 	fmt.Println(cenaProduktów, wybórProduktu)
 	return cenaProduktów, wybórProduktu
 }
-func main() {
+
+func promocjewbiedrze(promka int, promocja float64) float64 {
 	rand.Seed(time.Now().UnixNano())
-	promka := rand.Intn(100)
-	czaspromki := rand.Intn(100)
-	promka = promka * -1
-	fmt.Println(promka)
-	fmt.Println(czaspromki)
+	promka = rand.Intn(100)
+	fmt.Println(promka, "% Promocja (promka)")
+	promocja = 100
+	promocja = float64(promka) / 100
+	fmt.Println(promocja, "% Promocja (promka)")
+	return float64(promocja)
+}
 
-	promocja := 100
-	promocja = promka / promocja
-	fmt.Println(promka)
-	fmt.Println("Co chcesz kupić? ")
+func main() {
+	var x int
+	var y int
+	fmt.Scanln(&y)
+	var łącznykoszt float32
+	for x = 0; x < y; x++ {
+		fmt.Println("Co chcesz kupić? ")
+		var zachcianka string
+		fmt.Scanln(&zachcianka)
+		var menucena float32
+		var menunazwa string
+		bydziałało := promocjewbiedrze(1, 1)
 
-	var zachcianka string
-	fmt.Println(promocja)
-	fmt.Scanln(&zachcianka)
-	var menucena float32
-	var menunazwa string
-	menucena, menunazwa = Menu(zachcianka)
-	menucena = menucena - menucena*float32(promocja)
-
-	fmt.Println(menucena, menunazwa)
-
+		menucena, menunazwa = Menu(zachcianka)
+		menucena = menucena - menucena*float32(bydziałało)
+		menucena = float32(DoubleRoundFive(menucena))
+		fmt.Println(menucena, menunazwa)
+		łącznykoszt = łącznykoszt + menucena
+		fmt.Println(łącznykoszt, "Łączny koszt")
+	}
+	fmt.Println(łącznykoszt)
 }
